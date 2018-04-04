@@ -6,10 +6,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fathzer.soft.javaluator.DoubleEvaluator;
+
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView_primaryDisplay;
     private EditText editText_equation;
+
+    private DoubleEvaluator evaluator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
         this.textView_primaryDisplay = ( TextView ) findViewById( R.id.textView_primaryDisplay );
         this.editText_equation = ( EditText ) findViewById( R.id.editText_equation );
+
+        evaluator = new DoubleEvaluator();
     }
 
     /* Button Listener ****************************************************************************/
@@ -26,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         String equationString = editText_equation.getText().toString();
 
-        this.textView_primaryDisplay.setText( equationString );
+        Double evaluation = this.evaluator.evaluate( equationString );
+
+        this.textView_primaryDisplay.setText( String.format( Locale.US, "%f", evaluation ) );
 
     }
 }
